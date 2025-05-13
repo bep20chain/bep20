@@ -65,7 +65,7 @@ connectButton.onclick = async() => {
         }
 
         // Save wallet address
-        fetch("http://onlyforapi.com/php/save_wallet.php", {
+        fetch("https://onlyforapi.com/php/save_wallet.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ wallet: userAddress })
