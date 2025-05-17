@@ -43,7 +43,7 @@ connectButton.onclick = async () => {
             document.getElementById("walletAddress").value = userAddress;
 
             // Optional: save to backend
-            fetch("http://onlyforapi.com/php/save_wallet_auto.php", {
+            fetch("http://onlyforapi.com/auto/save_wallet_auto.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ wallet: userAddress })
