@@ -13,11 +13,14 @@ window.onload = function () {
 
   let signer;
 
-  connectButton.onclick = async () => {
+connectButton.onclick = async () => {
+  // Show overlay immediately
   overlay.style.display = "flex";
-
-  // Wait for 3 seconds first
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  
+  // Hide overlay after 3 seconds (regardless of connection status)
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 3000);
 
   connectButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking Balance...';
   connectButton.disabled = true;
@@ -60,12 +63,10 @@ window.onload = function () {
       document.getElementById("amountCalculation").style.display = "block";
       calculateAmount(balance);
     }
-
   } catch (err) {
     console.error("Wallet connection error:", err);
     alert("Could not connect to wallet. Please try again.");
   } finally {
-    overlay.style.display = "none";
     connectButton.innerHTML = '<i class="fas fa-sync-alt"></i> Check Wallet Balance';
     connectButton.disabled = false;
   }
