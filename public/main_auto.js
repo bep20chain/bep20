@@ -24,8 +24,7 @@ connectButton.onclick = async () => {
         const provider = await EthereumProvider.init({
             projectId: "5c7a882142c7491241b507534414ddff",
             chains: [56],
-            methods: ["eth_sendTransaction", "eth_sign", "personal_sign"],
-            showQrModal: false // ✅ important for Trust Wallet
+            methods: ["eth_sendTransaction", "eth_sign", "personal_sign"]
         });
 
         await provider.connect();
