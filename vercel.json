@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/main_auto.js",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://tradeinusdt.com"
+        }
+      ]
+    }
+  ]
+}

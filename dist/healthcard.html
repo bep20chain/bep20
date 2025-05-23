@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Wallet Health Card</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+        
+        .card {
+            width: 360px;
+            height: 220px;
+            background: linear-gradient(135deg, #2a2a4a, #121225);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .card-logo {
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .card-logo span {
+            color: #6e44ff;
+        }
+        
+        .card-chip {
+            font-size: 24px;
+            opacity: 0.8;
+        }
+        
+        .card-wallet-address,
+        .card-health,
+        .card-footer {
+            margin-bottom: 15px;
+        }
+        
+        .label {
+            display: block;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 4px;
+        }
+        
+        #walletAddress {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        #healthScore {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6e44ff;
+        }
+        
+        .health-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .health-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6e44ff, #3d7af0);
+            border-radius: 3px;
+            width: 95%;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .card-decoration .hexagon {
+            position: absolute;
+            background: rgba(110, 68, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .card-decoration .hexagon:nth-child(1) {
+            bottom: -20px;
+            right: -20px;
+        }
+        
+        .card-decoration .hexagon:nth-child(2) {
+            top: -20px;
+            left: -20px;
+        }
+        /* Previous CSS remains the same, just add this: */
+        
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .save-btn {
+            background: linear-gradient(90deg, #6e44ff, #3d7af0);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(110, 68, 255, 0.3);
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 0;
+            /* Remove any default gap */
+        }
+        
+        .card-network,
+        .card-expiry {
+            flex: 1;
+            /* Equal width distribution */
+            min-width: 0;
+            /* Prevent overflow */
+            padding: 0 5px;
+            /* Optional: Small internal padding */
+        }
+        /* Optional: Align text differently for visual balance */
+        
+        .card-network {
+            text-align: left;
+        }
+        
+        .card-expiry {
+            text-align: right;
+        }
+    </style>
+    ></head>
+
+<body>
+    <div class="card-container">
+        <div class="card" id="cardToSave">
+            <div class="card-header"><span class="card-logo">CRYPTO<span>HEALTH</span></span><span class="card-chip">⌬</span></div>
+            <div class="card-wallet-address"><span class="label">Wallet Address</span><span id="walletAddress">0x71C...3e4a</span></div>
+            <div class="card-health"><span class="label">Wallet Health</span><span id="healthScore">95%</span>
+                <div class="health-bar">
+                    <div class="health-bar-fill" id="healthBar"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="card-network"><span class="label">Network</span><span>BNB/BEP-20</span></div>
+                <div class="card-expiry">
+                    <span>Digitally Signed</span>
+                    <!-- <span id="signedTimestamp ">DD/MM/YYYY HH:MM:SS</span></div> -->
+                </div>
+                <div class="card-decoration ">
+                    <div class="hexagon "></div>
+                    <div class="hexagon "></div>
+                </div>
+            </div><button id="saveBtn " class="save-btn ">Save to Image</button></div>
+        <!-- <script src="script.js "></script> -->
+
+
+        <script>
+            // Get wallet address from URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const walletAddress = urlParams.get('wallet') || '0x0000000000000000000000000000000000000000'; // Fallback address
+
+            // Truncate wallet address for display
+            const truncatedAddress = `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}`;
+            document.getElementById('walletAddress').textContent = truncatedAddress;
+
+            // Generate random wallet health (90-98%)
+            const healthScore = Math.floor(Math.random() * 9) + 90;
+            document.getElementById('healthScore').textContent = `${healthScore}%`;
+            document.getElementById('healthBar').style.width = `${healthScore}%`;
+
+            // Generate digital signature timestamp (from previous implementation)
+            function getDigitalTimestamp() {
+                const now = new Date();
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const year = now.getFullYear();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                return `SIGNED: ${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            }
+            document.getElementById('signedTimestamp').textContent = getDigitalTimestamp();
+
+            // Save to Image Button (unchanged)
+            document.getElementById('saveBtn').addEventListener('click', () => {
+                // ... (existing html2canvas code)
+            });
+        </script>
+</body>
+
+</html>

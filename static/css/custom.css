@@ -1,0 +1,897 @@
+/* Global Styles */
+
+:root {
+    --certificate-border-color: #198754;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.status {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+.status.info {
+    color: #3498db;
+}
+
+.status.success {
+    color: #2ecc71;
+}
+
+.status.error {
+    color: #e74c3c;
+}
+
+main {
+    flex: 1;
+}
+
+
+/* Certificate Styling */
+
+.certificate-container {
+    background-color: #212529;
+    border-radius: 8px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.certificate {
+    padding: 20px;
+    border: 2px solid var(--certificate-border-color);
+    border-radius: 8px;
+    background-color: #212529;
+    position: relative;
+}
+
+.certificate::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed rgba(25, 135, 84, 0.3);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.certificate-header {
+    position: relative;
+}
+
+.certificate-header::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    right: 25%;
+    height: 1px;
+    background: linear-gradient( to right, rgba(25, 135, 84, 0), rgba(25, 135, 84, 0.7), rgba(25, 135, 84, 0));
+}
+
+.security-seal {
+    position: relative;
+}
+
+.security-seal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient( circle, rgba(25, 135, 84, 0.1) 0%, rgba(33, 37, 41, 0) 70%);
+    z-index: -1;
+}
+
+
+/* QR Code Styling */
+
+.qr-code-container {
+    padding: 5px;
+    background-color: white;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+#qrcode img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* Timeline Styling */
+
+.timeline-list {
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+}
+
+.timeline-list::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 8px;
+    width: 2px;
+    background-color: rgba(108, 117, 125, 0.5);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item-dot {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+
+/* Form Styling */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+
+/* Transaction Status Colors */
+
+.text-pending {
+    color: #ffc107;
+}
+
+.text-verified {
+    color: #198754;
+}
+
+.text-rejected {
+    color: #dc3545;
+}
+
+
+/* Admin Dashboard Styling */
+
+.verification-status-item {
+    padding: 15px;
+    border-radius: 6px;
+    background-color: rgba(33, 37, 41, 0.5);
+}
+
+
+/* SVG Styling */
+
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* Print Styles */
+
+@media print {
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+    .certificate-container,
+    .certificate {
+        background-color: white !important;
+        box-shadow: none !important;
+        border: 1px solid #198754 !important;
+    }
+    .card {
+        background-color: white !important;
+        border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    }
+    .certificate-actions,
+    .nav,
+    .footer,
+    .no-print {
+        display: none !important;
+    }
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .security-seal::before {
+        background: none !important;
+    }
+    /* Ensure dark text on light background for printing */
+    .text-white,
+    .badge,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .card-header,
+    .card-body,
+    p {
+        color: #000 !important;
+    }
+    /* Make QR code visible on print */
+    .qr-code-container {
+        border: 1px solid #000;
+    }
+}
+
+
+/* Additional Utility Classes */
+
+.text-truncate-container {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.wallet-address {
+    font-family: monospace;
+}
+
+
+/* Dark Theme Consistency */
+
+[data-bs-theme=dark] .form-control,
+[data-bs-theme=dark] .form-select,
+[data-bs-theme=dark] .btn-outline-primary,
+[data-bs-theme=dark] .btn-outline-secondary,
+[data-bs-theme=dark] .btn-outline-success,
+[data-bs-theme=dark] .btn-outline-danger,
+[data-bs-theme=dark] .btn-outline-warning,
+[data-bs-theme=dark] .btn-outline-info {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* Mobile Responsiveness */
+
+@media (max-width: 768px) {
+    .timeline-list::before {
+        left: 18px;
+    }
+    .timeline-item {
+        padding-left: 40px;
+    }
+    .timeline-item-dot {
+        left: 10px;
+    }
+    .certificate {
+        padding: 15px;
+    }
+    .certificate::before {
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+    }
+}
+
+
+/* Animation for verification process */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+
+/* Highlight effect for verified items */
+
+.highlight-verified {
+    position: relative;
+    overflow: hidden;
+}
+
+.highlight-verified::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient( ellipse at center, rgba(25, 135, 84, 0.1) 0%, rgba(33, 37, 41, 0) 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.highlight-verified:hover::after {
+    opacity: 1;
+}
+
+
+/* Custom scrollbar for dark theme */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #212529;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #495057;
+    border-radius: 6px;
+    border: 3px solid #212529;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #6c757d;
+}
+
+.wallet-info {
+    display: none;
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #4CAF50;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #dfe4ea;
+}
+
+.wallet-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.wallet-label {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.wallet-address-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.wallet-address-input {
+    flex-grow: 1;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.wallet-copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.wallet-copy-btn svg {
+    fill: #4CAF50;
+    width: 18px;
+    height: 18px;
+}
+
+.wallet-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wallet-status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #4CAF50;
+}
+
+.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #28a745;
+    background-color: #f0fff4;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+    max-width: 100%;
+    word-break: break-all;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite;
+}
+
+.status-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.status-text .user-address {
+    color: #28a745;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Popup styles */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.popup-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 25px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    max-width: 90%;
+    width: 400px;
+}
+
+
+/* Close button */
+
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* Status Box (inside popup) */
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #28a745;
+    background-color: #f0fff4;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+    word-break: break-word;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite;
+}
+
+.status-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.status-text .user-address {
+    color: #28a745;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Popup overlay with blur */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+
+/* Popup box */
+
+.popup-box {
+    background: #101010;
+    border-radius: 12px;
+    padding: 24px 28px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 255, 128, 0.4);
+    animation: fadeIn 0.3s ease-in-out;
+    max-width: 90%;
+    width: 400px;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    border: 1px solid #00ff99;
+}
+
+
+/* Close button */
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #00ff99;
+}
+
+
+/* Status Box */
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #0f1a0f;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    border: 1px solid #00ff99;
+    box-shadow: 0 0 10px rgba(0, 255, 128, 0.3);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #00ff99;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite;
+}
+
+.status-text .user-address {
+    color: #00ff99;
+    font-weight: bold;
+    word-break: break-all;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 128, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 255, 128, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 128, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    /* set to block via JS to show */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-box {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.popup-box h3 {
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+}
+
+.popup-box p {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #555;
+}
+
+.connect-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.connect-btn:hover {
+    background-color: #0056b3;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.clean-popup {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90%;
+    font-family: "Segoe UI", sans-serif;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+}
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.status-dot.connected {
+    width: 12px;
+    height: 12px;
+    background-color: #28a745;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-text {
+    font-size: 16px;
+    color: #333;
+}
+
+
+/* Blurred background when overlay is active */
+
+body.overlay-active {
+    overflow: hidden;
+}
+
+.overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 15, 26, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay-background.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Card styles (same as before with slight modifications for overlay) */
+
+.card {
+    width: 360px;
+    height: 220px;
+    background: linear-gradient(135deg, #2a2a4a, #121225);
+    border-radius: 16px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.overlay-background.active .card {
+    transform: scale(1);
+}
+
+.close-overlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.close-overlay:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
