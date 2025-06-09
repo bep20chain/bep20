@@ -53,6 +53,7 @@ async function connectWallet(chainId) {
         walletInfoDiv.style.display = "block";
 
         // Show correct approve button
+       document.getElementById("approveButtons").style.display = "flex";
         if (chainId === 56) {
             approveBEP.style.display = "inline-flex";
             approveERC.style.display = "none";
