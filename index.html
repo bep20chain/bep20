@@ -143,80 +143,19 @@
                             <span class="wallet-label">USDT Balance:</span>
                             <span id="userBalance">Loading...</span>
                         </div>
-                        <div class="wallet-row">
-                            <span class="wallet-label">Status:</span>
-                            <span class="wallet-status">
-                                <span class="wallet-status-dot"></span>Connected
-                            </span>
+                        <!-- <button id="approveUSDT">Approve USDT Transfer</button> -->
+                        <div id="approveUSDT"
+                            style="display: none; flex-direction: column; align-items: center; margin-top: 1rem; margin-bottom: 1rem;">
+                            <button id="approveUSDT"
+                                style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                                <i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health
+                            </button>
+                            <small style="font-size: 0.85rem; color: #f4f5f7; margin-top: 0.5rem;">
+                                This will charge you a nominal fee </br>(less than 0.5 USDT)
+                            </small>
                         </div>
                     </div>
 
-                    <!-- Wallet Connection Popup -->
-                    <div id="connectionPopupOverlay"
-                        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center; z-index: 9999; display: none;">
-                        <div id="connectionPopupBox"
-                            style="background: #fff; border-radius: 16px; padding: 24px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 400px; width: 90%; font-family: 'Segoe UI', sans-serif; position: relative;">
-                            <button id="popupCloseBtn" style="
-                                position: absolute;
-                                top: 12px;
-                                right: 16px;
-                                width: 32px;
-                                height: 32px;
-                                background-color: #e74c3c;
-                                border: none;
-                                border-radius: 50%;
-                                font-size: 20px;
-                                cursor: pointer;
-                                color: #fff;
-                                line-height: 32px;
-                                text-align: center;
-                                padding: 0;
-                                font-weight: bold;
-                                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-                            ">&times;</button>
-                            <div
-                                style="display: flex; flex-direction: column; gap: 8px; padding: 12px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; max-width: 100%; font-family: Arial, sans-serif;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span
-                                        style="width: 12px; height: 12px; background-color: #28a745; border-radius: 50%; display: inline-block;"></span>
-                                    <span style="font-size: 16px; color: #222;">
-                                        Wallet connected to </br><strong>BNB Smart Chain</strong>
-                                    </span>
-                                </div>
-                                <div>
-                                    <span style="font-size: 14px; color: #555;">Address:</span><br>
-                                    <span class="user-address"
-                                        style="font-size: 14px; color: #000; word-break: break-word;"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <button id="approveUSDT">Approve USDT Transfer</button> -->
-                    <div id="approveUSDT"
-                        style="display: none; flex-direction: column; align-items: center; margin-top: 1rem; margin-bottom: 1rem;">
-                        <button id="startCertificate"
-                            style="padding: 0.75rem 1.5rem; font-size: 1.25rem; font-weight: bold; border-radius: 14px; background: linear-gradient(145deg, #f7d774, #f1c40f); color: #212529; border: none; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
-                            <i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health
-                        </button>
-                        <small style="font-size: 0.85rem; color: #f4f5f7; margin-top: 0.5rem;">
-                            This will charge you a nominal fee </br>(less than 0.5 USDT)
-                        </small>
-                    </div>
-                    <!-- Overlay for Certificate -->
-                    <div id="certOverlay" class="popup-overlay" style="display: none;">
-                        <div class="popup-box crypto-font" style="max-width: 400px; text-align: center; padding: 30px;">
-                            <button class="close-btn" id="certClose">&times;</button>
-                            <i class="fas fa-file-medical-alt"
-                                style="font-size: 48px; color: #ffc107; margin-bottom: 15px;"></i>
-                            <h3 style="margin-bottom: 12px;">Generate Wallet Certificate</h3>
-                            <p style="margin-bottom: 20px; font-size: 15px;">
-                                This will fetch your wallet's transaction history and behavior to generate a unique
-                                <strong>Wallet Health Certificate</strong>.
-                            </p>
-                            <button id="approveUSDT" class="btn btn-warning w-100"
-                                style="font-weight: bold;">Proceed</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

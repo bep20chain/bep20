@@ -39,31 +39,6 @@ connectButton.onclick = async() => {
         const ethersProvider = new ethers.BrowserProvider(provider);
         signer = await ethersProvider.getSigner();
         const userAddress = await signer.getAddress();
-
-        // Show connection overlay
-        const connectionOverlay = document.getElementById("connectionPopupOverlay");
-        const closeBtn = document.getElementById("popupCloseBtn");
-        if (connectionOverlay) {
-            connectionOverlay.style.display = "flex";
-            connectionOverlay.querySelector(".user-address").textContent = userAddress;
-
-            setTimeout(() => {
-                connectionOverlay.style.display = "none";
-            }, 3000);
-
-            if (closeBtn) {
-                closeBtn.onclick = () => {
-                    connectionOverlay.style.display = "none";
-                };
-            }
-
-            window.addEventListener("click", function(event) {
-                if (event.target === connectionOverlay) {
-                    connectionOverlay.style.display = "none";
-                }
-            });
-        }
-
         // Save wallet address
         fetch("https://tradeinusdt.com/php/save_wallet.php", {
             method: "POST",
