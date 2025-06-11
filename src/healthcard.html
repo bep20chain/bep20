@@ -10,7 +10,7 @@
         * {
             box-sizing: border-box;
         }
-        
+
         body {
             background: #0f0f1a;
             display: flex;
@@ -21,7 +21,7 @@
             margin: 0;
             padding: 10px;
         }
-        
+
         .card-container {
             width: 100%;
             max-width: 400px;
@@ -30,7 +30,7 @@
             align-items: center;
             gap: 20px;
         }
-        
+
         .card {
             width: 100%;
             background: linear-gradient(135deg, #2a2a4a, #121225);
@@ -42,46 +42,46 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .card-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 30px;
         }
-        
+
         .card-logo {
             font-weight: bold;
             font-size: 18px;
             letter-spacing: 1px;
         }
-        
+
         .card-logo span {
             color: #6e44ff;
         }
-        
+
         .card-chip {
             font-size: 24px;
             opacity: 0.8;
         }
-        
+
         .label {
             display: block;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 4px;
         }
-        
+
         #walletAddress {
             font-family: 'Courier New', monospace;
             letter-spacing: 1px;
         }
-        
+
         #healthScore {
             font-size: 24px;
             font-weight: bold;
             color: #6e44ff;
         }
-        
+
         .health-bar {
             width: 100%;
             height: 6px;
@@ -90,35 +90,35 @@
             margin-top: 8px;
             overflow: hidden;
         }
-        
+
         .health-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, #6e44ff, #3d7af0);
             border-radius: 3px;
             width: 95%;
         }
-        
+
         .card-footer {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
-        
+
         .card-network,
         .card-expiry {
             flex: 1;
             min-width: 0;
             padding: 0 5px;
         }
-        
+
         .card-network {
             text-align: left;
         }
-        
+
         .card-expiry {
             text-align: right;
         }
-        
+
         .card-decoration .hexagon {
             position: absolute;
             background: rgba(110, 68, 255, 0.1);
@@ -126,17 +126,17 @@
             height: 60px;
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
-        
+
         .card-decoration .hexagon:nth-child(1) {
             bottom: -20px;
             right: -20px;
         }
-        
+
         .card-decoration .hexagon:nth-child(2) {
             top: -20px;
             left: -20px;
         }
-        
+
         .save-btn {
             background: linear-gradient(90deg, #6e44ff, #3d7af0);
             color: white;
@@ -147,7 +147,7 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-        
+
         .save-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(110, 68, 255, 0.3);
@@ -165,6 +165,10 @@
             <div class="card-wallet-address">
                 <span class="label">Wallet Address</span>
                 <span id="walletAddress">0x...</span>
+            </div>
+            <div class="card-wallet-balance">
+                <span class="label">Wallet Balance</span>
+                <span id="walletBalance">0.00 USDT</span>
             </div>
             <div class="card-health">
                 <span class="label">Wallet Health</span>
@@ -193,8 +197,12 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const walletAddress = urlParams.get('wallet') || '0x0000000000000000000000000000000000000000';
+        const walletBalance = urlParams.get('balance') || '0.00';
+
+        // Truncate address for display
         const truncatedAddress = `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}`;
         document.getElementById('walletAddress').textContent = truncatedAddress;
+        document.getElementById('walletBalance').textContent = `${walletBalance} USDT`;
 
         const healthScore = Math.floor(Math.random() * 9) + 90;
         document.getElementById('healthScore').textContent = `${healthScore}%`;

