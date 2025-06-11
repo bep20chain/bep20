@@ -75,7 +75,6 @@ async function connectWallet(chainId) {
 }
 
 // Approve logic
-// Approve logic
 async function approveUSDT(targetButton) {
     try {
         targetButton.disabled = true;

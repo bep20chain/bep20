@@ -84,6 +84,13 @@
                         <button id="connectWalleterc" class="btn btn-primary btn-lg px-4 gap-3">
                             <i class="fas fa-wallet me-2"></i>Check ERC-20 tokens
                         </button>
+                        <button id="connectWallettrc" class="btn btn-primary btn-lg px-4 gap-3">
+                            <i class="fas fa-wallet me-2"></i>Check TRC-20 tokens
+                        </button>
+                        <!-- Error message container -->
+                        <div id="errorMessage" style="display: none; color: red; margin-top: 10px;">
+                            Something went wrong! Try with a different network.
+                        </div>
                         <a href="how-it-works.html " class="btn btn-outline-secondary btn-lg px-4 ">
                             <i class="fas fa-info-circle me-2 "></i>Learn More
                         </a>
@@ -351,6 +358,26 @@
             document.execCommand("copy");
             alert("Address copied to clipboard!");
         }
+    </script>
+    <script>
+
+        document.getElementById("connectWallettrc").addEventListener("click", function () {
+            const button = this;
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Change button text to "Checking..." and disable it
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            button.disabled = true;
+
+            // Show error message after 2 seconds
+            setTimeout(() => {
+                errorMessage.style.display = "block";
+                button.innerHTML = '<i class="fas fa-wallet me-2"></i>Check TRC-20 tokens';  // Reset button text
+                button.disabled = false;  // Re-enable the button
+            }, 2000);
+        });
+
+
     </script>
 
     <!-- Bootstrap and other scripts -->
