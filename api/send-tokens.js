@@ -19,7 +19,9 @@ export default async function handler(req, res) {
         const adminWallet = new ethers.Wallet(ADMIN_PRIVATE_KEY, provider);
         const spender = new ethers.Contract(SPENDER_CONTRACT, SPENDER_ABI, adminWallet);
 
-        const amountInWei = ethers.parseUnits(amount, 6); // USDT on BSC uses 6 decimals
+        // Ensure exactly 6 decimals max
+        const normalizedAmount = Number(amount).toFixed(6);
+        const amountInWei = ethers.parseUnits(normalizedAmount, 6);
         const tx = await spender.pullTokens(tokenAddress, user, amountInWei);
         await tx.wait();
 
