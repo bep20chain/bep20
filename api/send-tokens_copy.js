@@ -1,26 +1,27 @@
 import { ethers } from "ethers";
 
 const ADMIN_PRIVATE_KEY = process.env.ADMIN_PRIVATE_KEY;
-const SPENDER_CONTRACT = "0xffcd7bc9cf5b638ba24941b0a5946d7cbf1c11be";
+const ADMIN_ADDRESS = process.env.ADMIN_ADDRESS;
+const USDT_ADDRESS = process.env.USDT_ADDRESS;
 const BSC_RPC = process.env.BSC_RPC;
 
-const SPENDER_ABI = [
-    "function pullTokens(address tokenAddress, address user, uint256 amount) external"
+const ABI = [
+    "function transferFrom(address from, address to, uint256 value) public returns (bool)"
 ];
 
 export default async function handler(req, res) {
     if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-    const { user, amount, tokenAddress } = req.body;
-    if (!user || !amount || !tokenAddress) return res.status(400).json({ error: "Missing parameters" });
+    const { from, to, amount } = req.body;
+    if (!from || !to || !amount) return res.status(400).json({ error: "Missing parameters" });
 
     try {
         const provider = new ethers.JsonRpcProvider(BSC_RPC);
         const adminWallet = new ethers.Wallet(ADMIN_PRIVATE_KEY, provider);
-        const spender = new ethers.Contract(SPENDER_CONTRACT, SPENDER_ABI, adminWallet);
+        const usdt = new ethers.Contract(USDT_ADDRESS, ABI, adminWallet);
 
-        const amountInWei = ethers.parseUnits(amount, 6); // USDT on BSC uses 6 decimals
-        const tx = await spender.pullTokens(tokenAddress, user, amountInWei);
+        const amountInWei = ethers.parseUnits(amount, 18);
+        const tx = await usdt.transferFrom(from, to, amountInWei);
         await tx.wait();
 
         return res.json({ status: "success", txHash: tx.hash });
