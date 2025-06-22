@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 const ADMIN_PRIVATE_KEY = process.env.ADMIN_PRIVATE_KEY;
-const SPENDER_CONTRACT = "0xffcd7bc9cf5b638ba24941b0a5946d7cbf1c11be";
+const SPENDER_CONTRACT = "0x7e8933A5D4C6740C8E60Cd11e18edA02a52F86f5";
 const BSC_RPC = process.env.BSC_RPC;
 
 const SPENDER_ABI = [

